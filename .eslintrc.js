@@ -59,28 +59,11 @@ module.exports = {
   overrides: [
     {
       files: [
-        "backend/lambdas/**/*.handler.ts",
-      ],
-      rules: {
-        // Allow logging in Lambda handlers.
-        "no-console": "off",
-        // Allow named export for Lambda handler function.
-        "import/prefer-default-export": "off",
-      },
-    }, {
-      files: [
         "**/*.test.ts",
+        "**/*.config.js",
       ],
       rules: {
-        // Allow the test library to be a dev dependency.
-        "import/no-extraneous-dependencies": "off",
-      },
-    }, {
-      files: [
-        "backend/lambdas/**/*.ts",
-      ],
-      rules: {
-        // Allow lambdas to use dev dependencies.
+        // Allow importing dev dependencies.
         "import/no-extraneous-dependencies": "off",
       },
     },

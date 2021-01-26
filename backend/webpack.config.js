@@ -1,4 +1,3 @@
-const path = require("path");
 const _ = require("lodash");
 
 const baseConfig = {
@@ -6,15 +5,12 @@ const baseConfig = {
   mode: "production",
   output: {
     filename: "[name].js",
-    path: path.join(__dirname, "dist"),
+    path: `${__dirname}/dist`,
     libraryTarget: "umd",
   },
   resolve: {
     extensions: [".ts", ".js"],
-    modules: [
-      "../node_modules",
-      __dirname,
-    ],
+    modules: ["node_modules"],
   },
   module: {
     rules: [
@@ -31,19 +27,19 @@ module.exports = [
   _.merge({}, baseConfig, {
     name: "archiver",
     entry: {
-      archiver: path.join(__dirname, "lambdas/Archiver/Archiver.handler.ts"),
+      archiver: `${__dirname}/lambdas/Archiver/Archiver.handler.ts`,
     },
   }),
   _.merge({}, baseConfig, {
     name: "daily-report-generator",
     entry: {
-      "daily-report-generator": path.join(__dirname, "lambdas/DailyReportGenerator/DailyReportGenerator.handler.ts"),
+      "daily-report-generator": `${__dirname}/lambdas/DailyReportGenerator/DailyReportGenerator.handler.ts`,
     },
   }),
   _.merge({}, baseConfig, {
     name: "report-aggregator",
     entry: {
-      "report-aggregator": path.join(__dirname, "lambdas/ReportAggregator/ReportAggregator.handler.ts"),
+      "report-aggregator": `${__dirname}/lambdas/ReportAggregator/ReportAggregator.handler.ts`,
     },
   }),
 ];

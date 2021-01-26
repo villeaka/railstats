@@ -1,16 +1,23 @@
 include .env
 ENV:=$(shell cat .env | xargs | sed 's/ /,/g')
+ROOT_DIR:=$(shell dirname $$(pwd))
 
 test:
-	npx ava
+	cd .. && npx ava backend/**/*.test.ts
+
+test-archiver:
+	cd .. && npx ava backend/lambdas/Archiver/**/*.test.ts
+
+test-daily-report-generator:
+	cd .. && npx ava backend/lambdas/DailyReportGenerator/**/*.test.ts
+
+test-report-aggregator:
+	cd .. && npx ava backend/lambdas/ReportAggregator/**/*.test.ts
 
 # Archiver
 
-test-archiver:
-	npx ava lambdas/Archiver/tests/*.test.ts
-
 dist-archiver: test-archiver
-	npx webpack -c webpack.config.js --config-name $(ARCHIVER_PACKAGE_NAME)
+	npx webpack -c ./webpack.config.js --config-name $(ARCHIVER_PACKAGE_NAME)
 	zip -j dist/$(ARCHIVER_PACKAGE_NAME).zip dist/$(ARCHIVER_PACKAGE_NAME).js
 
 init-archiver: dist-archiver
@@ -37,9 +44,6 @@ update-archiver: dist-archiver
 	--environment "Variables={$(ENV)}"
 
 # DailyReportGenerator
-
-test-daily-report-generator:
-	npx ava lambdas/DailyReportGenerator/tests/*.test.ts
 
 dist-daily-report-generator: test-daily-report-generator
 	npx webpack -c webpack.config.js --config-name $(DAILY_REPORT_GENERATOR_PACKAGE_NAME)
@@ -76,9 +80,6 @@ update-daily-report-generator: dist-daily-report-generator
 	--environment "Variables={$(ENV)}"
 
 # ReportAggregator
-
-test-report-aggregator:
-	npx ava lambdas/ReportAggregator/tests/*.test.ts
 
 dist-report-aggregator: test-report-aggregator
 	npx webpack -c webpack.config.js --config-name $(REPORT_AGGREGATOR_PACKAGE_NAME)

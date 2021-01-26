@@ -1,9 +1,12 @@
-CURRENT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+CURRENT_DIR:=$(shell pwd)
 
 test:
 	npx ava
 
-frontend:
+test-backend:
+	$(MAKE) -C $(CURRENT_DIR)/backend test
+
+dev-frontend:
 	$(MAKE) -C $(CURRENT_DIR)/frontend dev
 
 dist-frontend:
