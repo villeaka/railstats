@@ -9,6 +9,6 @@
   "search.exclude": {
     "**/node_modules": true,
     "**/dist": true,
-    "package-lock.json": true
+    "yarn.lock": true
   }
 }
