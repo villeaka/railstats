@@ -1,6 +1,5 @@
 include .env
 ENV:=$(shell cat .env | xargs | sed 's/ /,/g')
-ROOT_DIR:=$(shell dirname $$(pwd))
 
 test:
 	cd .. && npx ava backend/**/*.test.ts
